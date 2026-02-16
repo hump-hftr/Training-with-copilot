@@ -1,6 +1,11 @@
 """
 In-memory database for Mergington High School API
 Using simple dictionaries for easy development and testing
+
+NOTE: This is an in-memory database implementation intended for development
+and testing purposes only. All data is stored in memory and will be lost when
+the application restarts. For production use, replace with a persistent database
+like MongoDB, PostgreSQL, or similar.
 """
 
 from argon2 import PasswordHasher

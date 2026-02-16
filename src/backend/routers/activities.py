@@ -152,7 +152,7 @@ def get_activity_statistics() -> Dict[str, Any]:
     total_activities = len(all_activities)
     total_students = sum(len(activity.get("participants", [])) for activity in all_activities)
     
-    # Find most popular activity
+    # Find most popular activity (safe to use max() here since we checked for empty list above)
     most_popular = max(all_activities, key=lambda x: len(x.get("participants", [])))
     most_popular_name = most_popular.get("_id")
     most_popular_count = len(most_popular.get("participants", []))
