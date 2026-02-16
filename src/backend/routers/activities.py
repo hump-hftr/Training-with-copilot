@@ -126,3 +126,55 @@ def unregister_from_activity(activity_name: str, email: str, teacher_username: O
         raise HTTPException(status_code=500, detail="Failed to update activity")
     
     return {"message": f"Unregistered {email} from {activity_name}"}
+
+@router.get("/statistics")
+def get_activity_statistics() -> Dict[str, Any]:
+    """
+    Get statistics about all activities including:
+    - Total number of activities
+    - Total students enrolled
+    - Most popular activity
+    - Activities by day of week
+    """
+    # Get all activities from database
+    all_activities = list(activities_collection.find({}))
+    
+    if not all_activities:
+        return {
+            "total_activities": 0,
+            "total_students_enrolled": 0,
+            "most_popular_activity": None,
+            "activities_by_day": {},
+            "average_participants_per_activity": 0
+        }
+    
+    # Calculate statistics
+    total_activities = len(all_activities)
+    total_students = sum(len(activity.get("participants", [])) for activity in all_activities)
+    
+    # Find most popular activity
+    most_popular = max(all_activities, key=lambda x: len(x.get("participants", [])))
+    most_popular_name = most_popular.get("_id")
+    most_popular_count = len(most_popular.get("participants", []))
+    
+    # Count activities by day of week
+    activities_by_day = {}
+    for activity in all_activities:
+        schedule_details = activity.get("schedule_details", {})
+        days = schedule_details.get("days", [])
+        for day in days:
+            activities_by_day[day] = activities_by_day.get(day, 0) + 1
+    
+    # Calculate average
+    average_participants = round(total_students / total_activities, 2) if total_activities > 0 else 0
+    
+    return {
+        "total_activities": total_activities,
+        "total_students_enrolled": total_students,
+        "most_popular_activity": {
+            "name": most_popular_name,
+            "participant_count": most_popular_count
+        },
+        "activities_by_day": activities_by_day,
+        "average_participants_per_activity": average_participants
+    }
