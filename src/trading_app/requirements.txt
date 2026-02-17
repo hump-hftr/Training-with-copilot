@@ -38,7 +38,7 @@ requests==2.31.0
 asyncio-mqtt==0.16.2  # Optional: for real-time updates
 
 # Utilities
-python-multipart==0.0.9  # For form data
+python-multipart==0.0.22  # For form data (patched security vulnerabilities)
 
 # Security
 argon2-cffi==23.1.0  # Password hashing (if adding auth)
