@@ -402,10 +402,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Apply search and filter, and handle weekend filter in client
       displayFilteredActivities();
+      
+      // Fetch statistics
+      fetchStatistics();
     } catch (error) {
       activitiesList.innerHTML =
         "<p>Failed to load activities. Please try again later.</p>";
       console.error("Error fetching activities:", error);
+    }
+  }
+
+  // Function to fetch and display activity statistics
+  async function fetchStatistics() {
+    try {
+      const response = await fetch("/activities/statistics");
+      const stats = await response.json();
+      
+      // Update statistics display
+      document.getElementById("stat-total-activities").textContent = stats.total_activities;
+      document.getElementById("stat-total-students").textContent = stats.total_students_enrolled;
+      document.getElementById("stat-avg-participants").textContent = stats.average_participants_per_activity;
+      
+      // Display most popular activity
+      if (stats.most_popular_activity) {
+        const popularText = `${stats.most_popular_activity.name} (${stats.most_popular_activity.participant_count})`;
+        document.getElementById("stat-popular-activity").textContent = popularText;
+      } else {
+        document.getElementById("stat-popular-activity").textContent = "N/A";
+      }
+    } catch (error) {
+      console.error("Error fetching statistics:", error);
+      // Set default values on error
+      document.getElementById("stat-total-activities").textContent = "0";
+      document.getElementById("stat-total-students").textContent = "0";
+      document.getElementById("stat-avg-participants").textContent = "0";
+      document.getElementById("stat-popular-activity").textContent = "N/A";
     }
   }
 
