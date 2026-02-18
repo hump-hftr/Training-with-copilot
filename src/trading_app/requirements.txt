@@ -1,0 +1,58 @@
+# Web Framework
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+
+# Database
+pymongo==4.12.1
+
+# IBKR Integration
+ib-insync==0.9.86
+
+# Data Processing
+pandas==2.2.0
+numpy==1.26.4
+
+# Technical Analysis
+pandas-ta==0.3.14b0
+# ta-lib  # Optional: Uncomment if you want to use TA-Lib (requires C library)
+
+# Market Data
+yfinance==0.2.36
+
+# Configuration
+python-dotenv==1.0.1
+
+# Data Validation
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# Date/Time Utilities
+python-dateutil==2.8.2
+pytz==2024.1
+
+# HTTP Client (for external APIs)
+httpx==0.26.0
+requests==2.31.0
+
+# Async Support
+asyncio-mqtt==0.16.2  # Optional: for real-time updates
+
+# Utilities
+python-multipart==0.0.22  # For form data (patched security vulnerabilities)
+
+# Security
+argon2-cffi==23.1.0  # Password hashing (if adding auth)
+
+# Testing (Development)
+pytest==8.0.0
+pytest-asyncio==0.23.3
+pytest-cov==4.1.0
+# httpx already listed above for general HTTP client use
+
+# Code Quality (Development)
+black==24.1.1
+flake8==7.0.0
+mypy==1.8.0
+
+# Documentation
+markdown==3.5.2
